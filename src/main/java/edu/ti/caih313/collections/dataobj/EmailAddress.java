@@ -38,4 +38,33 @@ public class EmailAddress {
     boolean validate(String emailAddress) {
         return (emailAddress != null) && emailAddress.contains("@");
     }
+
+ @Override
+ public String toString()
+ {
+     StringBuilder emailString = new StringBuilder("<");
+
+     if ( (getEmailAddress(Type.HOME) == null) && (getEmailAddress(Type.WORK) == null) && (getEmailAddress(Type.SCHOOL) == null)) {
+         emailString.append("No email address available.");
+     }
+     if (getEmailAddress(Type.HOME) != null) {
+         emailString.append("HOME: ");
+         emailString.append(getEmailAddress(Type.HOME));
+         if (((getEmailAddress(Type.WORK) != null) || (getEmailAddress(Type.SCHOOL) != null))) {
+             emailString.append(", ");
+         }
+     }
+     if (getEmailAddress(Type.WORK) != null) {
+         emailString.append("WORK: ");
+         emailString.append(getEmailAddress(Type.WORK));
+         if (getEmailAddress(Type.SCHOOL) != null) {
+             emailString.append(", ");
+         }
+     }
+     if (getEmailAddress(Type.SCHOOL) != null) {
+         emailString.append("SCHOOL: ");emailString.append(getEmailAddress(Type.SCHOOL));
+     }
+     emailString.append(">");
+     return emailString.toString();
+ }
 }

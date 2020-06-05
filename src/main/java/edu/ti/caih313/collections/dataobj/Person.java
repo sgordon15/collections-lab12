@@ -1,7 +1,9 @@
 package edu.ti.caih313.collections.dataobj;
 
+
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 public class Person {
     private Name name;
@@ -36,12 +38,30 @@ public class Person {
         return ageNow.getYears();
     }
 
+    public void setEmailAddress(String email, EmailAddress.Type type) {
+        if (emailAddress == null) {
+            emailAddress = new EmailAddress(email, type);
+        } else {
+            emailAddress.emailMap.put(type, email);
+        }
+    }
+
     @Override
     public String toString() {
-        return "Person{" +
-                "name=" + name +
-                ", gender=" + gender +
-                ", birthDate=" + birthDate
-                + "}";
+        String primaryEmailAddress;
+        if (emailAddress == null) {
+            primaryEmailAddress = "No available email address";
+        } else {
+            primaryEmailAddress = emailAddress.getEmailAddress();
+        }
+
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MMM d, yyyy 'C.E.'");
+        String bday = birthDate.format(format);
+
+        return String.format("Person { Name = %s, Gender = %s, Birth Date = %s, Primary Email Address = %s }",
+                name, gender, bday, primaryEmailAddress);
     }
 }
+
+
+
